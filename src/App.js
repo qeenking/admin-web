@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Admin, Resource } from "react-admin";
+import { PostList, PostEdit, PostCreate, PostShow } from "./components/Posts";
+import {
+  CurriculumList,
+  CurriculumShow,
+  CurriculumCreate,
+} from "./components/curriculums";
+import { ThemeList, ThemeShow, ThemeCreate } from "./components/themes";
+import authProvider from "./components/authProvider";
+// import dataProvider from "./components/dataProvider";
+import myDataProvider from "./components/myDataProvider";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Admin authProvider={authProvider} dataProvider={myDataProvider}>
+      <Resource
+        name="contents"
+        list={PostList}
+        show={PostShow}
+        edit={PostEdit}
+        create={PostCreate}
+      />
+      <Resource
+        name="themes"
+        list={ThemeList}
+        show={ThemeShow}
+        create={ThemeCreate}
+      />
+      <Resource
+        name="curriculums"
+        list={CurriculumList}
+        show={CurriculumShow}
+        create={CurriculumCreate}
+      />
+    </Admin>
   );
-}
+};
 
 export default App;
