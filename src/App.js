@@ -1,6 +1,6 @@
 import React from "react";
 import { Admin, Resource } from "react-admin";
-import { PostList, PostEdit, PostCreate, PostShow } from "./components/Posts";
+import { PostList, PostCreate, PostShow } from "./components/Posts";
 import {
   CurriculumList,
   CurriculumShow,
@@ -18,7 +18,7 @@ const App = () => {
         name="contents"
         list={PostList}
         show={PostShow}
-        edit={PostEdit}
+        // edit={PostEdit}
         create={PostCreate}
       />
       <Resource

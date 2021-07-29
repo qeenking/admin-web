@@ -14,10 +14,15 @@ import {
   SimpleShowLayout,
   DateField,
   ArrayField,
+  Pagination,
 } from "react-admin";
 
 export const ThemeList = (props) => (
-  <List filters={<PostFilter />} {...props}>
+  <List
+    filters={<PostFilter />}
+    {...props}
+    perPage={30}
+    pagination={<Pagination rowsPerPageOptions={[]} />}>
     <Datagrid>
       <TextField source="id" />
       <TextField source="title" />

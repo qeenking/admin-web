@@ -14,10 +14,15 @@ import {
   DateField,
   ArrayField,
   SelectArrayInput,
+  Pagination,
 } from "react-admin";
 
 export const CurriculumList = (props) => (
-  <List filters={<PostFilter />} {...props}>
+  <List
+    filters={<PostFilter />}
+    {...props}
+    perPage={30}
+    pagination={<Pagination rowsPerPageOptions={[]} />}>
     <Datagrid>
       <TextField source="id" />
       <TextField source="category" />
@@ -33,6 +38,7 @@ export const CurriculumShow = (props) => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="title" />
+      <TextField source="description" />
       <TextField source="category" />
       <ArrayField source="themes">
         <Datagrid>

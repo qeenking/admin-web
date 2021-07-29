@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/proxy/*"
+  to = "https://api.dangnagwi.lomy.info/:splat"
+  status = 200
+  force = true

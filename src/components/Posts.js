@@ -7,7 +7,7 @@ import {
   SimpleForm,
   SelectInput,
   Edit,
-  EditButton,
+  // EditButton,
   Create,
   Filter,
   ImageField,
@@ -19,10 +19,34 @@ import {
   DateField,
   ShowButton,
   FunctionField,
+  Pagination,
+  required,
 } from "react-admin";
 
+// const orderExporter = (orders) => {
+//   const ordersForExport = orders.map((order) => {
+//     return {
+//       Id: order.id,
+//       Title: order.title,
+//       Category: order.category,
+//       Type: order.type,
+//       Description: order.description,
+//       Metadata: order.metadata,
+//       CreatedDate: order.createdDate,
+//       ModifiedDate: order.modifiedDate,
+//     };
+//   });
+//   jsonExport(ordersForExport, {}, (err, csv) => {
+//     downloadCSV(csv, "orders");
+//   });
+// };
+
 export const PostList = (props) => (
-  <List filters={<PostFilter />} {...props}>
+  <List
+    filters={<PostFilter />}
+    {...props}
+    perPage={30}
+    pagination={<Pagination rowsPerPageOptions={[]} />}>
     <Datagrid>
       <TextField source="id" />
       <TextField source="category" />
@@ -32,18 +56,19 @@ export const PostList = (props) => (
       </ReferenceField> */}
       <TextField source="title" />
       <ShowButton />
-      <EditButton />
+      {/* <EditButton /> */}
     </Datagrid>
   </List>
 );
 
 export const PostShow = (props) => (
-  <Show {...props}>
+  <Show title={<PostTitle />} {...props}>
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="title" />
       <TextField source="category" />
       <TextField source="type" />
+      <TextField source="description" />
       <ImageField source="thumbnail">
         <FunctionField
           label="Image"
@@ -54,6 +79,7 @@ export const PostShow = (props) => (
       </ImageField>
       <FilesField source="files" />
       <DateField label="Publication date" source="createdDate" />
+      <DateField label="Modified date" source="modifiedDate" />
     </SimpleShowLayout>
   </Show>
 );
@@ -74,14 +100,14 @@ export const PostEdit = (props) => {
           placeholder={<p>Drop your thumbnail here</p>}>
           <ImageField source="src" />
         </ImageInput>
-        <ImageField source="thumbnail">
+        {/* <ImageField source="thumbnail">
           <FunctionField
             label="Image"
             render={(record) => {
               return <img src={record.thumbnail} alt="thumbnail" />;
             }}
           />
-        </ImageField>
+        </ImageField> */}
         <FileInput source="files" label="Related files" multiple={true}>
           <FileField source="src" title="title" />
         </FileInput>
@@ -92,18 +118,20 @@ export const PostEdit = (props) => {
 };
 
 export const PostCreate = (props) => {
+  const validateInput = required();
   return (
     <Create {...props}>
       <SimpleForm>
-        <TextInput source="title" />
-        <TextInput source="category" />
-        <TextInput source="type" />
+        <TextInput source="title" validate={validateInput} />
+        <TextInput source="category" validate={validateInput} />
+        <TextInput source="type" validate={validateInput} />
         <TextInput multiline source="description" />
         <ImageInput
           source="metadata"
           label="thumbnail"
           accept="image/*"
-          placeholder={<p>Drop your thumbnail here</p>}>
+          placeholder={<p>Drop your thumbnail here</p>}
+          validate={validateInput}>
           <ImageField source="src" />
         </ImageInput>
         <FileInput source="files" label="Related files" multiple={true}>
@@ -135,4 +163,8 @@ const FilesField = ({ record }) => (
 );
 FilesField.defaultProps = {
   addLabel: true,
+};
+
+const PostTitle = ({ record }) => {
+  return <span>Post {record ? `"${record.title}"` : ""}</span>;
 };
